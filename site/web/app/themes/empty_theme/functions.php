@@ -8,10 +8,25 @@ function extractCategoryInfo($category) {
     );
 }
 
-function empty_theme_scripts() {
+function getMenuInfo($menuLocationString) {
+    if ( is_string($menuLocationString) && ($locations = get_nav_menu_locations()) && isset($locations[$menuLocationString]) ) {
+        $menu = get_term( $locations[$menuLocationString], 'nav_menu' );
+        return(
+            array_map(function($menuItem){
+                return array(
+                    'destination' => $menuItem->url,
+                    'title' => $menuItem->title
+                );
+            }, wp_get_nav_menu_items($menu->term_id))
+        );
+    }
+    return array();
+}
+
+function brickly_scriptsAndStyles() {
 	// Load our main stylesheet.
-	wp_enqueue_style( 'react-style', get_stylesheet_directory_uri() . '/dist/style.css');
-	wp_enqueue_style( 'empty-theme-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'react-style', get_stylesheet_directory_uri() . '/react_app_built/style.css');
+	wp_enqueue_style( 'wordpress-required-style', get_stylesheet_uri() );
 
     wp_enqueue_script( 'react-app', get_stylesheet_directory_uri() . '/react_app_built/app.js' , array(), '1.0', true );
 
@@ -35,14 +50,14 @@ function empty_theme_scripts() {
             'name' => get_post_meta(98, 'name', true),
             'telephone' => get_post_meta(98, 'telephone', true),
             'email' => get_post_meta(98, 'email', true),
-
         ),
-        'category' => array_map("extractCategoryInfo", $categories)
+        'category' => array_map('extractCategoryInfo', $categories),
+        'outlinks' => getMenuInfo('outlinks'),
     ) ) ) );
 }
-add_action( 'wp_enqueue_scripts', 'empty_theme_scripts' );
+add_action( 'wp_enqueue_scripts', 'brickly_scriptsAndStyles' );
 
-function submitForm( $data ) {
+function handleEnquiryFormSubmission( $data ) {
     $first_name = sanitize_text_field( trim( $data['first_name'] ) );
     $last_name = sanitize_text_field( trim( $data['last_name'] ) );
     $email = sanitize_email( trim( $data['email'] ) );
@@ -67,6 +82,22 @@ function submitForm( $data ) {
 add_action( 'rest_api_init', function () {
   register_rest_route( 'brickly/v1', '/enquiry', array(
     'methods' => 'POST',
-    'callback' => 'submitForm'
+    'callback' => 'handleEnquiryFormSubmission'
   ) );
 } );
+
+add_theme_support( 'menus' );
+
+add_action( 'init', function () {
+    register_nav_menu('outlinks', 'Links to other sites');
+} );
+
+// REMOVE WP EMOJI
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+// REMOVE oEmbed
+remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+add_filter( 'tiny_mce_plugins', 'disable_embeds_tiny_mce_plugin' );
