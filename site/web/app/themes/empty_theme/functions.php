@@ -1,17 +1,23 @@
 <?php
-function extractCategoryInfo($category) {
-    return array(
-        'name' => $category->name,
-        'description' => $category->description,
-        'count' => $category->count,
-        'id' => $category->term_id,
-        'slug' => $category->slug,
-    );
+
+function getCategories() {
+    $wordpressCategories = get_categories();
+    $formattedCategories = array();
+    foreach ($wordpressCategories as $category) {
+        $formattedCategories[$category->slug] = array(
+            'name' => $category->name,
+            'description' => $category->description,
+            'count' => $category->count,
+            'id' => $category->term_id,
+        );
+    };
+    return $formattedCategories;
 }
 
 function getMenuInfo($menuLocationString) {
-    if ( is_string($menuLocationString) && ($locations = get_nav_menu_locations()) && isset($locations[$menuLocationString]) ) {
-        $menu = get_term( $locations[$menuLocationString], 'nav_menu' );
+    $locations = get_nav_menu_locations();
+    if (isset($locations[$menuLocationString])) {
+        $menu = get_term($locations[$menuLocationString], 'nav_menu');
         return(
             array_map(function($menuItem){
                 return array(
@@ -24,17 +30,42 @@ function getMenuInfo($menuLocationString) {
     return array();
 }
 
+function getPosts() {
+    global $post;
+    $args = array(
+        'posts_per_page' => 200, 
+        'post_type' => 'post',
+    );
+    $wordpressPosts = get_posts($args);
+    $formattedPosts = array();
+    foreach ( $wordpressPosts as $post ) : 
+        if ( ! empty($post) && is_a($post, 'WP_Post') ) {
+            $postId = get_the_ID();
+            $postTags = get_the_tags('', '', '');
+            $formattedPosts[(string) $postId] = array(
+                'title' => $post->post_title,
+                'byLine' => get_post_meta($postId, 'intro', true),
+                'tags' => $postTags ? array_map(function($tag){ return $tag->name; }, $postTags) : [],
+                'categories' => array_values(wp_get_post_categories($postId, array('fields' => 'id=>slug'))),
+                'repo' => get_post_meta($postId, 'repo', true),
+                'liveSite' => get_post_meta($postId, 'site', true),
+                'content' => $post->post_content,
+                'image' => wp_get_attachment_link(),
+                'date' => $post->post_date
+            );
+        }
+    endforeach;
+    return $formattedPosts;
+}
+
 function brickly_scriptsAndStyles() {
-	// Load our main stylesheet.
 	wp_enqueue_style( 'react-style', get_stylesheet_directory_uri() . '/react_app_built/style.css');
 	wp_enqueue_style( 'wordpress-required-style', get_stylesheet_uri() );
-
     wp_enqueue_script( 'react-app', get_stylesheet_directory_uri() . '/react_app_built/app.js' , array(), '1.0', true );
 
     $url = trailingslashit( home_url() );
     $path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );
     $authorPost = get_post(98);
-    $categories = array_values(get_categories());
 
     wp_scripts()->add_data( 'react-app', 'data', sprintf( 'var WORDPRESS = %s;', wp_json_encode( array(
         'site' => array(
@@ -52,8 +83,9 @@ function brickly_scriptsAndStyles() {
             'telephone' => get_post_meta(98, 'telephone', true),
             'email' => get_post_meta(98, 'email', true),
         ),
-        'category' => array_map('extractCategoryInfo', $categories),
+        'category' => getCategories(),
         'outlinks' => getMenuInfo('outlinks'),
+        'posts' => getPosts(),
     ) ) ) );
 }
 add_action( 'wp_enqueue_scripts', 'brickly_scriptsAndStyles' );
