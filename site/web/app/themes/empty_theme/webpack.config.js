@@ -32,19 +32,27 @@ module.exports = {
                 ],
            },
            {
-               test: /\.(jpe?g|png|gif|svg)$/i,
+               test: /\.(jpe?g|png|gif)$/i,
                use: [
-                   'file-loader?name=[name].[ext]&outputPath=images/&publicPath=http://localhost/celestial/wp-content/themes/empty_theme/react_app_built/images',
+                   'file-loader?name=[name].[ext]&outputPath=images/&publicPath=http://olivier.test/app/themes/empty_theme/react_app_built/images',
                    'image-webpack-loader'
                ]
            },
            { test:
-               /\.(woff2?|svg)$/,
-               loader: 'url-loader?limit=10000&name=fonts/[name].[ext]'
-           },
-           {
-               test: /\.(ttf|eot)$/,
-               loader: 'file-loader?name=fonts/[name].[ext]'
+                /\.(woff2?|ttf|eot)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts/',
+                        publicPath: 'fonts/'
+                    }
+                }]
+                
+            },
+           { test:
+               /\.svg$/,
+               loader: 'url-loader?limit=10000&name=images/[name].[ext]'
            }
        ]
    },
