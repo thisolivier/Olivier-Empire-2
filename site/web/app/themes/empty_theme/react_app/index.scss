@@ -6,9 +6,15 @@
 
 // React Components
 
-// these relate to the cloud/sidebar
-// think of it as a header, always containing the cloud, and sometimes a sidebar
+// Index
+.compactWidth{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
 @import "styling/headerCloud";
 @import "styling/sidebar";
 @import "styling/outlinks";
 @import "styling/towerOfBricks";
+@import "styling/categoryAndPost";

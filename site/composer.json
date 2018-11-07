@@ -40,8 +40,8 @@
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "roots/wp-config": "1.0.0",
-    "wpackagist-plugin/two-factor":"^0.2",
-    "wpackagist-plugin/backwpup": "^3.4",
+    "wpackagist-plugin/two-factor":"^0.3",
+    "wpackagist-plugin/backwpup": "^3.6.3",
     "wpackagist-plugin/flamingo":"^1.9"
   },
   "require-dev": {

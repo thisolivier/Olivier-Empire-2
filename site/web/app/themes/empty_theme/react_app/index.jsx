@@ -9,7 +9,6 @@ import Category from './components/Category'
 
 require('./index.scss');
 
-
 class App extends React.Component {
 
     constructor(props) {
@@ -32,49 +31,45 @@ class App extends React.Component {
         window.removeEventListener('resize', this.handleResize)
     }
 
-    render() {
-        
+    // Excuse this fugly signature, I wanted access to the route
+    render() {return(<Route render={(props) => {
+        let pageClassName = undefined
+        if (props.location.pathname === '/') {
+            pageClassName = this.state.settingUp ? 'intro' : 'home'
+        } else if (props.location.pathname.startsWith('/c')) {
+            pageClassName = 'category'
+        }
+        if (this.state.constrainedWidth) {
+            pageClassName = pageClassName + ' compactWidth'
+        }
         return(
-            <Route render={(props) => {
-                let pageClassName = undefined
-                let showsSidebar = false
-                if (props.location.pathname === '/') {
-                    pageClassName = this.state.settingUp ? 'intro' : 'home'
-                    showsSidebar = !this.state.settingUp
-                } else if (props.location.pathname.startsWith('/c')) {
-                    pageClassName = 'category'
-                }
-                console.log(props.location, pageClassName)
-                return(
-                    <div id="page-inner" className={pageClassName}>
-                        <div className="headerContainer">
-                            <HeaderCloud />
-                            {showsSidebar ? (<Route exact path="/" component={GenericSidebar} />) : null}
-                        </div>
-                        <div>
-                            <Switch>
-                                <Route path="/c/:categorySlug" component={Category} />
-                                <Route path="/" render={(routeParams) => (
-                                    <TowerOfBricks 
-                                    settingUp={this.state.settingUp}
-                                    constrainedWidth={this.state.constrainedWidth} 
-                                    content={WORDPRESS.category} 
-                                    />
-                                )} />
-                            </Switch>
-                        </div>
-                    </div>
-                )
-            }} />
+            <div id="page-inner" className={pageClassName}>
+                <div className="headerContainer">
+                    <HeaderCloud />
+                    <Route exact path="/" component={GenericSidebar} />
+                </div>
+                <div>
+                    <Switch>
+                        <Route path="/c/:categorySlug" component={Category} />
+                        <Route path="/" render={(routeParams) => (
+                            <TowerOfBricks 
+                            settingUp={this.state.settingUp}
+                            constrainedWidth={this.state.constrainedWidth} 
+                            content={WORDPRESS.category} 
+                            />
+                        )} />
+                    </Switch>
+                </div>
+            </div>
         )
-    }
+    }}/>)}
 
     handleSetupComplete() {
         this.setState({settingUp: false})
     }
 
     handleResize() {
-        this.setState({constrainedWidth: (window.innerWidth < 600)})
+        this.setState({constrainedWidth: (window.innerWidth < 680)})
     }
 
 }

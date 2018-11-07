@@ -2,12 +2,15 @@ html, body{
   height: 100%;
   width: 100%;
   margin: 0;
-  position: relative;
+  position: absolute;
   scroll-behavior: smooth;
   font-family: branding, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: cornsilk;
+}
+img{
+    max-width: 100%;
 }
 
 .hidden, .hide {

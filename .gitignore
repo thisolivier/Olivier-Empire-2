@@ -2,3 +2,7 @@
 .Trashes
 *.xcuserdata
 *.xcworkspacedata
+
+/site/web/app/themes/*
+/site/web/app/uploads/*
+*_production.sql
