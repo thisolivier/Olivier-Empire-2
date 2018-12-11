@@ -1,5 +1,5 @@
 # Documentation: https://roots.io/trellis/docs/vault/
-vault_mysql_root_password: stagingpw
+vault_mysql_root_password: cDMEI967nx3z098776958424aT448ev
 
 # Documentation: https://roots.io/trellis/docs/security/
 vault_users:
@@ -10,9 +10,9 @@ vault_users:
 # Variables to accompany `group_vars/staging/wordpress_sites.yml`
 # Note: the site name (`example.com`) must match up with the site name in the above file.
 vault_wordpress_sites:
-  example.com:
+  olivier.uk:
     env:
-      db_password: example_dbpassword
+      db_password: BVyfty7v6709NB360165v32Gr8b
       # Generate your keys here: https://roots.io/salts.html
       auth_key: "x}?>p.h{*X)>|H#_4%Fr*$J:NI)z%1-(U$vbRmd8_Lb8P&9(RGu#!r;4=]8ROm|5"
       secure_auth_key: "}gD@YM802)pRPY!=UjI:ya^9CH%0S)BA4_SQKWXG&uF$l=l76C}L:5:C?5&Y}j&}"
