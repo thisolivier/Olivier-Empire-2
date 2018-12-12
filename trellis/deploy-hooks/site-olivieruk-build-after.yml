@@ -11,7 +11,7 @@
   command: npm install
   connection: local
   args:
-    chdir: "{{ project_local_path }}/web/app/themes/empty-theme"
+    chdir: "{{ project_local_path }}/web/app/themes/brickly"
 
 # - name: Install Composer dependencies
 #   command: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --no-scripts
@@ -22,12 +22,12 @@
   command: npm run build
   connection: local
   args:
-    chdir: "{{ project_local_path }}/web/app/themes/empty-theme"
+    chdir: "{{ project_local_path }}/web/app/themes/brickly"
 
 - name: Copy production assets
   synchronize:
-    src: "{{ project_local_path }}/web/app/themes/empty-theme/react_app_built"
-    dest: "{{ deploy_helper.new_release_path }}/web/app/themes/empty-theme"
+    src: "{{ project_local_path }}/web/app/themes/brickly/react_app_built"
+    dest: "{{ deploy_helper.new_release_path }}/web/app/themes/brickly/react_app_built"
     group: no
     owner: no
     rsync_opts: --chmod=Du=rwx,--chmod=Dg=rx,--chmod=Do=rx,--chmod=Fu=rw,--chmod=Fg=r,--chmod=Fo=r
