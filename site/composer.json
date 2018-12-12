@@ -35,11 +35,11 @@
       "type": "package",
       "package": {
         "name": "brickly",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "type": "wordpress-theme",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.1.zip"
+          "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.2.zip"
         }
       }
     }
@@ -48,7 +48,7 @@
   "require": {
     "php": ">=5.6",
     "composer/installers": "^1.4",
-    "vlucas/phpdotenv": "^2.0.1",
+    "vlucas/phpdotenv": "^2.0.2",
     "johnpbloch/wordpress": "4.9.8",
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
