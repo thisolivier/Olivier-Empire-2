@@ -30,8 +30,21 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "brickly",
+        "version": "dev-master",
+        "type": "wordpress-theme",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/thisolivier/Brickly-Theme/archive/react.zip"
+        }
+      }
     }
   ],
+  
   "require": {
     "php": ">=5.6",
     "composer/installers": "^1.4",
@@ -40,9 +53,10 @@
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "roots/wp-config": "1.0.0",
-    "wpackagist-plugin/two-factor":"^0.3",
+    "wpackagist-plugin/two-factor": "^0.3",
     "wpackagist-plugin/backwpup": "^3.6.3",
-    "wpackagist-plugin/flamingo":"^1.9"
+    "wpackagist-plugin/flamingo": "^1.9",
+    "brickly": "dev-master"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2",
