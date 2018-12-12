@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "15c9d4151d7a6ccb90a02609968fcc23",
+    "content-hash": "af8b701dc88f58daa13290a301cfca39",
     "packages": [
         {
             "name": "brickly",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.2.zip",
+                "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.3.zip",
                 "reference": null,
                 "shasum": null
             },
