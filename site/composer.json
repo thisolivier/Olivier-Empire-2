@@ -35,7 +35,7 @@
       "type": "package",
       "package": {
         "name": "brickly",
-        "version": "2.0.3",
+        "version": "2.0.4",
         "type": "wordpress-theme",
         "dist": {
           "type": "zip",
