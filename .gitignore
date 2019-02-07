@@ -7,4 +7,4 @@
 /site/web/app/uploads/*
 *_production.sql
 
-.launchBackup.zip
+*launchBackup.zip
