@@ -35,11 +35,11 @@
       "type": "package",
       "package": {
         "name": "brickly",
-        "version": "2.0.9",
+        "version": "2.0.10",
         "type": "wordpress-theme",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.9.zip"
+          "url": "https://github.com/thisolivier/Brickly-Theme/archive/2.0.10.zip"
         }
       }
     }
